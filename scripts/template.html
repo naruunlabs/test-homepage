@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="format-detection" content="telephone=yes">
+  <meta name="theme-color" content="{{THEME_DARK}}">
+  {{META}}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  {{JSONLD}}
+<style>
+:root{
+  --dark:{{THEME_DARK}}; --dark2:{{THEME_DARK2}};
+  --accent:{{THEME_ACCENT}}; --gold:{{THEME_GOLD}}; --tint:{{THEME_TINT}};
+  --white:#fff; --ink:#16181D; --muted:#6B7280; --line:#E5E8EC;
+  --font:'Noto Sans KR',-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
+  --wrap:1120px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{font-family:var(--font);color:var(--ink);background:var(--white);line-height:1.7;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+
+.skip{position:absolute;left:-9999px;top:0;background:var(--dark);color:#fff;padding:10px 16px;z-index:999}
+.skip:focus{left:0}
+
+/* ── 상단바 ── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.94);
+     backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav-in{max-width:var(--wrap);margin:0 auto;padding:0 20px;height:64px;
+        display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{font-weight:900;font-size:1.02rem;color:var(--dark);letter-spacing:-.02em;white-space:nowrap}
+.nav-links{display:flex;gap:22px;font-size:.88rem;font-weight:500;color:#41464F}
+.nav-links a:hover{color:var(--accent)}
+.nav-cta{background:var(--accent);color:#fff;padding:9px 18px;border-radius:7px;
+         font-size:.86rem;font-weight:700;white-space:nowrap}
+.nav-toggle{display:none;background:none;border:0;font-size:1.5rem;color:var(--dark);cursor:pointer;padding:4px 8px}
+
+/* ── 히어로 ── */
+.hero{margin-top:64px;min-height:min(78vh,620px);display:flex;align-items:center;
+      background:linear-gradient(160deg,var(--dark) 0%,var(--dark2) 100%);
+      background-size:cover;background-position:center;position:relative}
+.hero::after{content:'';position:absolute;inset:0;
+             background:linear-gradient(160deg,rgba(0,0,0,.62),rgba(0,0,0,.42))}
+.hero-in{max-width:var(--wrap);margin:0 auto;padding:72px 20px;position:relative;z-index:1;width:100%}
+.hero-badge{display:inline-block;color:rgba(255,255,255,.86);font-size:.85rem;font-weight:500;
+            padding-bottom:8px;border-bottom:2px solid var(--accent);margin-bottom:22px}
+.hero h1{color:#fff;font-size:clamp(1.85rem,5.2vw,3.05rem);font-weight:900;
+         line-height:1.32;letter-spacing:-.025em}
+.hero p{color:rgba(255,255,255,.8);font-size:clamp(.95rem,2vw,1.08rem);margin-top:18px;max-width:34em}
+.hero-btns{display:flex;gap:11px;margin-top:32px;flex-wrap:wrap}
+
+.btn{display:inline-block;padding:13px 26px;border-radius:8px;font-size:.93rem;font-weight:700;
+     border:1.6px solid transparent;transition:transform .16s,opacity .16s;cursor:pointer}
+.btn:hover{transform:translateY(-1px);opacity:.92}
+.btn-fill{background:var(--accent);color:#fff}
+.btn-line{border-color:rgba(255,255,255,.4);color:#fff}
+.sec .btn-line{border-color:var(--dark);color:var(--dark)}
+
+/* ── 섹션 공통 ── */
+.sec{padding:76px 0}
+.sec-tint{background:var(--tint)}
+.sec-dark{background:linear-gradient(160deg,var(--dark) 0%,var(--dark2) 100%);color:#fff}
+.inner{max-width:var(--wrap);margin:0 auto;padding:0 20px}
+.eyebrow{display:block;font-size:.72rem;font-weight:800;letter-spacing:.14em;
+         text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.sec-dark .eyebrow{color:var(--gold)}
+.sec-title{font-size:clamp(1.35rem,3.4vw,1.95rem);font-weight:900;letter-spacing:-.02em;
+           line-height:1.42;color:var(--dark)}
+.sec-dark .sec-title{color:#fff}
+.sec-lead{color:var(--muted);font-size:.95rem;margin-top:12px;max-width:44em}
+.sec-dark .sec-lead{color:rgba(255,255,255,.72)}
+.sec-note{color:var(--muted);font-size:.88rem;margin-top:16px}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.chip{background:var(--white);border:1px solid var(--line);border-radius:99px;
+      padding:7px 15px;font-size:.85rem;font-weight:600;color:var(--dark)}
+
+/* ── 강점 ── */
+.s-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px}
+.s-card{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:26px 22px}
+.s-card h3{font-size:1rem;font-weight:700;color:var(--dark);margin-bottom:9px}
+.s-card p{font-size:.89rem;color:var(--muted);line-height:1.72}
+
+/* ── 교육과정 ── */
+.p-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:34px}
+.p-card{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--white);
+        transition:transform .18s,box-shadow .18s}
+.p-card:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(0,0,0,.09)}
+.p-thumb{aspect-ratio:4/3;background:linear-gradient(135deg,var(--dark),var(--dark2))}
+.p-thumb img{width:100%;height:100%;object-fit:cover}
+.p-body{padding:18px 18px 22px}
+.p-tag{display:inline-block;background:var(--tint);color:var(--accent);font-size:.74rem;
+       font-weight:700;padding:4px 10px;border-radius:99px;margin-bottom:9px}
+.p-body h3{font-size:1.06rem;font-weight:800;color:var(--dark);margin-bottom:7px}
+.p-body p{font-size:.87rem;color:var(--muted);line-height:1.7}
+
+/* ── 관장 ── */
+.m-wrap{display:grid;grid-template-columns:340px 1fr;gap:44px;align-items:center}
+.m-photo img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:14px}
+.m-name{font-size:1.22rem;font-weight:900;color:var(--dark);margin-top:16px}
+.m-name span{font-size:.86rem;font-weight:500;color:var(--muted);margin-left:8px}
+.m-desc{font-size:.94rem;color:#3C4149;margin-top:14px;line-height:1.85}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.badge{background:var(--white);border:1px solid var(--line);border-radius:99px;
+       padding:6px 14px;font-size:.81rem;font-weight:600;color:var(--dark)}
+
+/* ── 시설 ── */
+.f-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}
+.f-pic{border-radius:12px;overflow:hidden;margin:0}
+.f-pic img{width:100%;aspect-ratio:4/3;object-fit:cover}
+
+/* ── 돌봄 ── */
+.care-steps{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:34px;counter-reset:c}
+.care-steps li{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);
+               border-radius:12px;padding:22px 18px;counter-increment:c}
+.care-steps li::before{content:counter(c);display:block;color:var(--gold);font-weight:900;
+                       font-size:.95rem;margin-bottom:10px}
+.care-steps strong{display:block;color:#fff;font-size:1rem;margin-bottom:6px}
+.care-steps span{font-size:.86rem;color:rgba(255,255,255,.7);line-height:1.7}
+
+/* ── 공지 ── */
+.n-list{list-style:none;margin-top:26px;border-top:1px solid var(--line)}
+.n-list li{border-bottom:1px solid var(--line)}
+.n-list a{display:grid;grid-template-columns:1fr auto;grid-template-areas:"t d" "s s";
+          gap:4px 18px;padding:19px 6px;transition:background .16s}
+.n-list a:hover{background:var(--tint)}
+.n-title{grid-area:t;font-weight:700;font-size:1rem;color:var(--dark)}
+.n-desc{grid-area:s;font-size:.87rem;color:var(--muted);
+        display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.n-list time{grid-area:d;font-size:.83rem;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+
+/* ── 갤러리 ── */
+.g-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:28px 0 26px}
+.g-card{margin:0;border-radius:12px;overflow:hidden;background:var(--white);
+        box-shadow:0 1px 3px rgba(0,0,0,.08);transition:transform .18s,box-shadow .18s}
+.g-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,.13)}
+.g-card img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.g-card figcaption{padding:13px 15px 16px}
+.g-title{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+         font-weight:600;font-size:.91rem;color:var(--dark);line-height:1.5}
+.g-date{display:block;margin-top:6px;font-size:.79rem;color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* ── FAQ ── */
+.faq-list{margin-top:26px;border-top:1px solid var(--line)}
+.faq-item{border-bottom:1px solid var(--line)}
+.faq-item summary{padding:19px 6px;font-weight:700;font-size:.98rem;color:var(--dark);
+                  cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{content:'+';color:var(--accent);font-weight:900;font-size:1.2rem;flex-shrink:0}
+.faq-item[open] summary::after{content:'−'}
+.faq-a{padding:0 6px 20px;font-size:.92rem;color:#3C4149;line-height:1.85}
+
+/* ── 오시는 길 ── */
+.loc-name{font-size:1.1rem;font-weight:800;color:var(--dark);margin-top:20px}
+.loc-addr{font-size:.94rem;color:var(--muted);margin-top:6px}
+.loc-btns{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}
+
+/* ── 상담 ── */
+.contact{background:linear-gradient(160deg,var(--dark),var(--dark2));color:#fff;padding:76px 0;text-align:center}
+.contact .sec-title{color:#fff}
+.contact p{color:rgba(255,255,255,.74);margin-top:12px}
+.contact-btns{display:flex;gap:11px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+
+/* ── 푸터 ── */
+.foot{background:#0B0D10;color:rgba(255,255,255,.56);padding:40px 0;font-size:.85rem}
+.foot strong{display:block;color:#fff;font-size:.98rem;font-weight:700;margin-bottom:9px}
+.foot p{line-height:1.85}
+.foot .copy{margin-top:18px;font-size:.79rem;color:rgba(255,255,255,.36)}
+
+/* ── 하단 고정 버튼 (모바일) ── */
+.float{display:none;position:fixed;left:0;right:0;bottom:0;z-index:99;
+       background:var(--white);border-top:1px solid var(--line);padding:9px 12px;gap:8px}
+.float a{flex:1;text-align:center;padding:13px;border-radius:8px;font-weight:700;font-size:.92rem}
+.float .f1{background:var(--accent);color:#fff}
+.float .f2{background:var(--tint);color:var(--dark)}
+
+@media (max-width:900px){
+  .s-grid,.p-grid,.care-steps,.g-grid,.f-grid{grid-template-columns:repeat(2,1fr)}
+  .m-wrap{grid-template-columns:1fr;gap:26px}
+  .m-photo{max-width:300px}
+}
+@media (max-width:640px){
+  .nav-links{display:none;position:absolute;top:64px;left:0;right:0;background:#fff;
+             flex-direction:column;gap:0;padding:8px 0;border-bottom:1px solid var(--line);
+             box-shadow:0 8px 20px rgba(0,0,0,.08)}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:13px 22px}
+  .nav-toggle{display:block}
+  .nav-cta{display:none}
+  .sec{padding:56px 0}
+  .s-grid,.care-steps{grid-template-columns:1fr}
+  .p-grid,.g-grid,.f-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .n-list a{grid-template-columns:1fr;grid-template-areas:"t" "s" "d"}
+  body{padding-bottom:66px}
+  .float{display:flex}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">본문 바로가기</a>
+
+<header class="nav">
+  <div class="nav-in">
+    <a class="logo" href="#top">{{SHORT_NAME}}</a>
+    <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기" aria-expanded="false">☰</button>
+    <nav class="nav-links" id="navLinks">
+{{NAV}}
+    </nav>
+    <a class="nav-cta" href="{{TEL_HREF}}">전화 상담</a>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" id="top" {{HERO_BG}}>
+    <div class="hero-in">
+      <span class="hero-badge">{{HERO_BADGE}}</span>
+      <h1>{{HERO_T1}}<br>{{HERO_T2}}</h1>
+      <p>{{HERO_SUB}}</p>
+      <div class="hero-btns">
+        <a class="btn btn-fill" href="#contact">{{CTA1}}</a>
+        <a class="btn btn-line" href="#programs">{{CTA2}}</a>
+      </div>
+    </div>
+  </section>
+
+{{SECTIONS}}
+
+  <section class="contact" id="contact">
+    <div class="inner">
+      <span class="eyebrow">상담 문의</span>
+      <h2 class="sec-title">무료 체험수업 상담</h2>
+      <p>아이의 나이와 거주 지역을 알려주시면 가능한 시간과 차량운행 여부를 안내해드립니다.</p>
+      <div class="contact-btns">
+        <a class="btn btn-fill" href="{{TEL_HREF}}">전화로 상담 {{PHONE}}</a>
+        {{KAKAO_BTN}}
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="inner">
+    <strong>{{NAME}}</strong>
+    <p>{{ADDRESS}}<br>
+       대표전화 {{PHONE}}{{PHONE2_BLOCK}}<br>
+       운영시간: {{HOURS}}</p>
+    <p class="copy">© {{YEAR}} {{NAME}}. All rights reserved.</p>
+  </div>
+</footer>
+
+<div class="float">
+  <a class="f1" href="{{TEL_HREF}}">전화 상담</a>
+  <a class="f2" href="#contact">체험 신청</a>
+</div>
+
+<script>
+(function(){
+  var t=document.getElementById('navToggle'), l=document.getElementById('navLinks');
+  if(!t||!l)return;
+  t.addEventListener('click',function(){
+    var open=l.classList.toggle('open');
+    t.setAttribute('aria-expanded',open?'true':'false');
+    t.textContent=open?'✕':'☰';
+  });
+  l.addEventListener('click',function(ev){
+    if(ev.target.tagName==='A'){l.classList.remove('open');t.textContent='☰';
+      t.setAttribute('aria-expanded','false');}
+  });
+})();
+</script>
+</body>
+</html>
